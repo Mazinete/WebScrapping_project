@@ -16,7 +16,7 @@ def main(url):
         driver = navigationLienByExpression('.navlinkcat__listContainerInner', driver)
         liens = recuperationLiens(".ipc-sub-grid-item--span-2", driver)
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=2) as executor:
             results = executor.map(extract_comments, liens)
 
         liensComment = list(results)       

@@ -10,7 +10,7 @@ from pymongo import MongoClient
 
 def getUrl(url):
     try:
-        driver = webdriver.Chrome()
+        driver = webdriver.Edge()
         driver.get(url)
         return driver
     except Exception as e:
@@ -84,6 +84,7 @@ def recuperationLienComment(expr, driver):
         )
         if liens:
             lienUrl = liens[0].get_attribute('href')
+            print(lienUrl)
             return lienUrl
         else:
             print("Aucun lien trouvé.")
