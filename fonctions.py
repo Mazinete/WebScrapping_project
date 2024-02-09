@@ -52,15 +52,6 @@ def navigationLienByExpression(expr,driver):
     except Exception as e:
         print(f"Une erreur s'est produite lors de la navigation vers le lien : {e}")
     
-def searchInput(expr, driver, texte):
-    try:
-        inputText = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, f'{expr}')))
-        inputText=driver.find_element(By.CSS_SELECTOR,f'{expr}')
-        inputText.send_keys(texte)
-        inputText.send_keys(Keys.ENTER)
-    except Exception as e:
-        print(f"Une erreur s'est produite : {e}")
 
 def recuperationLiens(expr, driver):
     try:
