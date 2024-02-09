@@ -1,15 +1,29 @@
 import scrapy
 from IMDb_project.items import ImdbProjectItem
+import json
+import os
 
 class MoviesSpider(scrapy.Spider):
     name = "movies"
     allowed_domains = ["www.imdb.com"]
-    start_urls = ["https://www.imdb.com/title/tt0111161/reviews?ref_=tt_urv"]
+
+    def start_requests(self):
+        #chemin absolu du fichier JSON
+        json_file_path = os.path.join(os.getcwd(), 'liens.json')
+
+        #charger les liens à partir du fichier JSON
+        with open(json_file_path, 'r') as f:
+            data = json.load(f)
+            liens = data['liens']
+
+        #utiliser les liens comme start_urls
+        for lien in liens:
+            yield scrapy.Request(url=lien, callback=self.parse)
 
     def parse(self, response):
         #extraction du titre du film et de sa date de sortie
-        title = response.css('h3[itemprop="name"] a::text').get()
-        release_date = response.css('h3[itemprop="name"] .nobr::text').get()
+        title = response.css('h3 > a::text').get()
+        release_date = response.css('h3 > span.nobr::text').get()
 
         #création d'un objet Item pour stocker les données du film
         item = ImdbProjectItem()

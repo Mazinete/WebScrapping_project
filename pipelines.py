@@ -1,16 +1,10 @@
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
-# useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 import json
     
 class DataCleaning_Pipeline:
+    #Pipeline pour nettoyer et normaliser les données avant de les envoyer en json. Principalement, les titres
+    #et les date de sorties des films qui avaient des problèmes de format.
     def process_item(self, item, spider):
-        #nettoyer et normaliser les données
         if item['title']:
             item['title'] = item['title'].strip()
         if item['release_date']:
@@ -23,6 +17,7 @@ class DataCleaning_Pipeline:
         return item
 
 class Json_Pipeline:
+    #Piepline pour créer le fichier json qu'on envoie ensuite pour l'entrainement de notre modèle ML
     def open_spider(self, spider):
         self.file = open('data.json', 'w')
         self.first_item = True
