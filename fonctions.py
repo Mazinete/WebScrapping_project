@@ -93,18 +93,18 @@ def recuperationLienComment(expr, driver):
         print(f"Une erreur s'est produite : {e}")
 
     
-def sauvegardeInfosToCsv(meteo_infos, chemin_fichier_csv):
+def sauvegardeInfosToCsv(liens, chemin_fichier_csv):
     try:
-        df = pd.DataFrame([vars(info) for info in meteo_infos])
+        df = pd.DataFrame([vars(info) for info in liens])
         df.to_csv(chemin_fichier_csv, index=False)
     except Exception as e:
         print(f"Une erreur s'est produite lors de l'enregistrement des informations dans le fichier CSV : {e}")
 
 
-def sauvegardeInfosToJson(meteo_infos, chemin_fichier_json):
+def sauvegardeInfosToJson(liens, chemin_fichier_json):
     try:
         with open(chemin_fichier_json, 'w') as f:
-            json.dump(meteo_infos, f, indent=4)
+            json.dump(liens, f, indent=4)
     except Exception as e:
         print(f"Une erreur s'est produite lors de la sauvegarde des données dans le fichier JSON : {e}")
 
